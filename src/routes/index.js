@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
+import Game from '../pages/Game';
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     path: '/signUp',
     exact: true,
     component: SignUp,
+  },
+  {
+    path: '/game',
+    exact: true,
+    component: Game,
   },
   {
     path: '/',

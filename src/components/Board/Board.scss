@@ -1,0 +1,50 @@
+.board-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  .status {
+    color: #fff;
+    display: block;
+    font-size: 34px;
+    margin: 50px auto;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .board-row {
+    width: 520px;
+    height: 168px;
+    margin: auto;
+    display: flex;
+
+    &:after {
+      clear: both;
+      content: '';
+      display: table;
+    }
+  }
+
+  .button-box {
+    margin-bottom: -50px !important;
+    margin-right: -360px !important;
+    margin: auto;
+    padding: 4% !important;
+  }
+
+  .placar {
+    border: 2px dashed #363f4a;
+    width: 300px;
+    height: 350px;
+    font-size: 20px;
+    padding: 30px;
+
+    .container-total {
+      background-color: white;
+      margin-top: 45px;
+      padding: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border: 2px solid #363f4a;
+    }
+  }
+}

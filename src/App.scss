@@ -1,0 +1,38 @@
+.tic-tac-toe-body {
+  font: 14px;
+  padding: 50px;
+  background-image: linear-gradient(
+    to right,
+    #0189b2,
+    #0189b2,
+    #96d2e4,
+    #007ba0
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  .button-box {
+    padding: 8%;
+    .btn-game {
+      background: #2c343e;
+      border: 5px solid #2c343e;
+      border-radius: 45px;
+      color: #fff;
+      cursor: pointer;
+      display: block;
+      font-size: 19px;
+      font-weight: 700;
+      margin: 13px auto;
+      outline: none;
+      padding: 11px 30px;
+      text-transform: uppercase;
+      width: 226px;
+
+      &:hover {
+        background: #f3f3f3;
+        color: #363f4a;
+      }
+    }
+  }
+}

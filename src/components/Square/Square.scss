@@ -1,0 +1,42 @@
+.board-column {
+  text-align: center;
+  border: 5px solid #363f4a;
+  padding: 0;
+  background-color: #007ba0;
+  float: left;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 34px;
+  width: 180px !important;
+  height: 180px !important;
+  color: #f3f3f3;
+
+  &:hover {
+    background: #f3f3f3;
+    color: #363f4a;
+    cursor: pointer;
+  }
+  &:focus {
+    outline: none;
+  }
+  &-0,
+  &-3,
+  &-6 {
+    border-left-color: transparent !important;
+  }
+  &-0,
+  &-1,
+  &-2 {
+    border-top-color: transparent !important;
+  }
+  &-2,
+  &-5,
+  &-8 {
+    border-right-color: transparent !important;
+  }
+  &-6,
+  &-7,
+  &-8 {
+    border-bottom-color: transparent !important;
+  }
+}
