@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "heroku/nodejs": "cross-env NODE_ENV=production webpack --progress -p"
+    "heroku-postbuild": "cross-env NODE_ENV=production webpack --progress -p"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
