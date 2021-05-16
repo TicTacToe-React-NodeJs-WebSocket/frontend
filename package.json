@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "heroku-postbuild": "cross-env NODE_ENV=production webpack --progress -p"
+    "heroku/nodejs": "cross-env NODE_ENV=production webpack --progress -p"
   },
   "eslintConfig": {
     "extends": [
