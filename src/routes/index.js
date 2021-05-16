@@ -5,6 +5,7 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
 import Game from '../pages/Game';
+import PlayersList from '../pages/PlayersList';
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     path: '/game',
     exact: true,
     component: Game,
+  },
+  {
+    path: '/playersList',
+    exact: true,
+    component: PlayersList,
   },
   {
     path: '/',

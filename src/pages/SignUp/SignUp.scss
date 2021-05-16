@@ -1,0 +1,71 @@
+.registrar-container{
+  width: 30%;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  border-radius: 8%;
+
+  &__inputs{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    input{
+      font-size: 1.5em;
+    }
+    .input{
+      width: 100%;
+      border: none;
+      outline: none;
+      margin-bottom: 10px;
+      text-align: center;
+      background: transparent;
+      border-bottom: 2px solid #363f4a;
+
+    }
+  }
+
+  &__button{
+    width: 40%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 40px !important;
+    padding: 25px 0;
+    button {
+      color: #323233;
+      width: 100%;
+      height: 40px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: 0.5s;
+      border-radius: 20px;
+      background: rgb(249,176,0);
+      background: linear-gradient(90deg, rgba(249,176,0,1) 0%, rgba(255,208,51,1) 53%, rgba(249,176,0,1) 100%);
+      :hover {
+        transform: translateY(1.25px) translateX(1.25px);
+        cursor: pointer;
+        background-position: 100% 0;
+      }
+      :active {
+          outline: none;
+      }
+      :focus {
+          outline: none;
+      }
+    }
+
+    .cancel {
+      color: #c00a25;
+      opacity: 0.75;
+      margin-top: 5px;
+      text-decoration: none;
+      background: none;
+    }
+  }
+}
