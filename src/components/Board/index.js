@@ -4,12 +4,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useSelector, useDispatch, useEffect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './Board.scss';
 
 import Square from '../Square';
 
 export default function Board({ currentRoom }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { socketInstance, userInfo } = useSelector((state) => state.Auth);
   const [state, setState] = React.useState({
     squares: Array(9).fill(null),
@@ -70,18 +72,13 @@ export default function Board({ currentRoom }) {
   };
 
   const resetScoreBoard = () => {
-    const squares = state.squares.slice();
-    if (state.winner || !state.running) {
-      squares.fill(null);
-      setState({
-        ...state,
-        squares,
-        currentPlayerX: true,
-        winner: null,
-        running: true,
-        totalMatches: 0,
-      });
-    }
+    history.push('/playersList');
+    socketInstance.emit('quit', {
+      anotherPlayer:
+        userInfo.username !== currentRoom.Player1.username
+          ? currentRoom.Player1.socketID
+          : currentRoom.Player2.socketID,
+    });
   };
 
   React.useEffect(() => {
@@ -146,24 +143,10 @@ export default function Board({ currentRoom }) {
       setState({ ...data.state });
     };
 
-    // const handleWinner = (data) => {
-    //   setState({
-    //     ...state,
-    //     winsX:
-    //       currentRoom.Player1.username === data.user1.username
-    //         ? data.user1.score
-    //         : data.user2.score,
-    //     winsO:
-    //       currentRoom.Player2.username === data.user1.username
-    //         ? data.user1.score
-    //         : data.user2.score,
-    //   });
-    // };
-
     if (socketInstance) {
       socketInstance.on('toMove', handleClickListener);
       socketInstance.on('resetGame', handleClickListener);
-      // socketInstance.on('winner', handleWinner);
+      socketInstance.on('quit', () => history.push('/playersList'));
     }
   }, [socketInstance, state]);
 
@@ -416,7 +399,7 @@ export default function Board({ currentRoom }) {
               className="btn-game"
               onClick={() => resetScoreBoard()}
             >
-              Zerar Placar
+              Sair da Sala
             </button>
           </>
         ) : null}
