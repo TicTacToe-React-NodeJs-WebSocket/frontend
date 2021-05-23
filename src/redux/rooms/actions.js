@@ -2,45 +2,54 @@ import axios from 'axios';
 import globals from '../../globals';
 
 const actions = {
-  SIGN_IN: 'SIGN_IN',
-  SIGN_OUT: 'SIGN_OUT',
   CLEAR_ERROR_STATUS: 'CLEAR_ERROR_STATUS',
   REPORT_ERROR: 'REPORT_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
   TOGGLE_LOADING: 'TOGGLE_LOADING',
-  SET_SOCKET: 'SET_SOCKET',
+  CREATE_ROOM: 'CREATE_ROOM',
+  GET_CURRENT_ROOM: 'GET_CURRENT_ROOM',
 
-  authSignIn: (infos) => (dispatch) => {
-    dispatch(actions.toggleLoading());
+  createRoom: (data) => (dispatch) => {
+    dispatch(actions.toggleLoading);
     axios
-      .post(`${globals.API_URL}/users/auth`, infos)
+      .post(`${globals.API_URL}/gameRooms/`, data)
       .then((resp) => {
         if (resp.status === 200) {
-          dispatch({
-            type: actions.SIGN_IN,
-            payload: {
-              user: resp.data.user,
-            },
-          });
-          dispatch(actions.reportSuccess('Login efetuado com sucesso!'));
+          dispatch(actions.reportSuccess('Sala Criada com sucesso!'));
           dispatch(actions.toggleLoading());
-        } else if (resp.status === 201) {
-          dispatch(actions.reportError('Usuário ou senha incorretos!'));
-          dispatch(actions.toggleLoading());
+          dispatch({ type: actions.CREATE_ROOM, payload: resp.data });
         }
       })
       .catch(() => {
-        dispatch(actions.reportError('Erro ao efetuar o login!'));
+        dispatch(actions.reportError('Erro ao criar Sala!'));
         dispatch(actions.toggleLoading());
       });
   },
 
-  authSignOut: () => (dispatch) => dispatch({ type: actions.SIGN_OUT }),
+  getCurrentRoom: (room) => (dispatch) => {
+    console.log('--action');
+    console.log(room);
+    dispatch(actions.toggleLoading());
+    axios
+      .get(`${globals.API_URL}/gameRooms/${room.roomID}`)
+      .then((resp) => {
+        if (resp.status === 200) {
+          dispatch({
+            type: 'GET_CURRENT_ROOM',
+            payload: {
+              room: resp.data.room,
+            },
+          });
+          dispatch(actions.toggleLoading());
+        }
+      })
+      .catch(() => {
+        dispatch(actions.reportError('Erro ao carregar sala!'));
+        dispatch(actions.toggleLoading());
+      });
+  },
 
-  setSocket: (socket) => (dispatch) =>
-    dispatch({ type: actions.SET_SOCKET, payload: socket }),
-
-  clearAuthStatus: () => (dispatch) =>
+  clearRoomStatus: () => (dispatch) =>
     dispatch({ type: actions.CLEAR_ERROR_STATUS }),
 
   reportError: (message) => (dispatch) =>

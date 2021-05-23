@@ -6,6 +6,7 @@ const actions = {
   REPORT_ERROR: 'REPORT_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
   TOGGLE_LOADING: 'TOGGLE_LOADING',
+  GET_ALL_USERS: 'GET_ALL_USERS',
 
   userRegister: (newUser) => (dispatch) => {
     dispatch(actions.toggleLoading);
@@ -22,6 +23,27 @@ const actions = {
       })
       .catch(() => {
         dispatch(actions.reportError('Erro ao cadastrar usuário!'));
+        dispatch(actions.toggleLoading());
+      });
+  },
+
+  getAllUsers: () => (dispatch) => {
+    dispatch(actions.toggleLoading());
+    axios
+      .get(`${globals.API_URL}/users/all`)
+      .then((resp) => {
+        if (resp.status === 200) {
+          dispatch({
+            type: actions.GET_ALL_USERS,
+            payload: {
+              allUsers: resp.data.users,
+            },
+          });
+          dispatch(actions.toggleLoading());
+        }
+      })
+      .catch(() => {
+        dispatch(actions.reportError('Erro ao carregar usuários!'));
         dispatch(actions.toggleLoading());
       });
   },

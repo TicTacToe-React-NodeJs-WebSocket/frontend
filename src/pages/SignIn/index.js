@@ -24,9 +24,13 @@ export default function SignIn() {
 
   const { notificationsQueue } = useSelector((state) => state.Notifications);
 
-  const { authError, authSuccess, authLoading, userInfo } = useSelector(
-    (state) => state.Auth
-  );
+  const {
+    authError,
+    authSuccess,
+    authLoading,
+    userInfo,
+    socketInstance,
+  } = useSelector((state) => state.Auth);
 
   const inputs = [
     {
@@ -65,6 +69,9 @@ export default function SignIn() {
   };
 
   const handleSuccess = () => {
+    socketInstance.emit('login', {
+      username,
+    });
     dispatch(pushNotification('success', authSuccess.message, ''));
     dispatch(clearAuthStatus());
 
@@ -78,6 +85,7 @@ export default function SignIn() {
       authSignIn({
         username,
         password,
+        socketID: socketInstance ? socketInstance.id : null,
       })
     );
   };

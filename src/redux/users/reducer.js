@@ -3,6 +3,7 @@ import actions from './actions';
 const INITIAL_STATE = {
   profilePhotoChanged: false,
   userLoading: false,
+  allUsers: null,
   userSuccess: {
     status: false,
     message: '',
@@ -15,6 +16,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actions.GET_ALL_USERS:
+      return {
+        ...state,
+        allUsers: action.payload.allUsers,
+      };
     case actions.TOGGLE_LOADING:
       return {
         ...state,

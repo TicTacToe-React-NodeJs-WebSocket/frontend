@@ -2,28 +2,55 @@ import 'antd/dist/antd.css';
 
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 import './App.scss';
 
-import promise from 'redux-promise';
-import multi from 'redux-multi';
-import thunk from 'redux-thunk';
+import socket from './services/socketClient';
+import authActions from './redux/auth/actions';
 
-import reducers from './redux/reducers';
+import InviteDuel from './components/InviteDuel';
+
 import Routes from './routes';
 
-const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers);
+const { setSocket } = authActions;
 
 function App() {
+  const dispatch = useDispatch();
+
+  const handleAcceptedDuel = (data) => {
+    // RESPONDNDO O CONVITE
+    socket.emit('duelAccepted', data);
+  };
+
+  React.useEffect(() => {
+    const disconnetFunction = () => {
+      socket.emit('disconnet', {
+        socketID: socket.id,
+      });
+    };
+
+    socket.on('connect', () => dispatch(setSocket(socket)));
+
+    socket.on('duelInvitation', (data) => {
+      InviteDuel(
+        'info',
+        `${data.currentUsername} está desafiando você..`,
+        data.msg,
+        data.currentUsername,
+        data.username,
+        handleAcceptedDuel
+      );
+    });
+    window.onbeforeunload = disconnetFunction;
+
+    return () => socket.off('disconnet', disconnetFunction);
+  });
+
   return (
     <div className="tic-tac-toe-body">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </Provider>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </div>
   );
 }

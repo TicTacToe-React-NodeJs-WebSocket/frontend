@@ -1,16 +1,13 @@
 import actions from './actions';
 
 const INITIAL_STATE = {
-  authenticated: false,
-  profilePhoto: null,
-  userInfo: null,
-  socketInstance: null,
-  authLoading: false,
-  authSuccess: {
+  roomLoading: false,
+  currentRoom: null,
+  roomSuccess: {
     status: false,
     message: '',
   },
-  authError: {
+  roomError: {
     status: false,
     message: '',
   },
@@ -18,48 +15,24 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actions.USER_UPDATED:
+    case actions.GET_CURRENT_ROOM:
       return {
         ...state,
-        authenticated: true,
-        userInfo: action.payload.user,
-        profilePhoto: action.payload.user.profilePhoto,
+        currentRoom: action.payload.room,
       };
-    case actions.SIGN_IN:
-      return {
-        ...state,
-        authenticated: true,
-        userInfo: action.payload.user,
-        profilePhoto: action.payload.user.profilePhoto,
-      };
-
-    case actions.SIGN_OUT:
-      return {
-        ...state,
-        authenticated: false,
-        profilePhoto: null,
-        userInfo: null,
-      };
-
     case actions.TOGGLE_LOADING:
       return {
         ...state,
-        authLoading: !state.authLoading,
+        roomLoading: !state.roomLoading,
       };
-    case actions.SET_SOCKET:
-      return {
-        ...state,
-        socketInstance: action.payload,
-      };
-
     case actions.REPORT_SUCCESS:
       return {
         ...state,
-        authError: {
+        roomError: {
           status: false,
           message: '',
         },
-        authSuccess: {
+        roomSuccess: {
           status: true,
           message: action.payload.message,
         },
@@ -68,11 +41,11 @@ export default (state = INITIAL_STATE, action) => {
     case actions.REPORT_ERROR:
       return {
         ...state,
-        authSuccess: {
+        roomSuccess: {
           status: false,
           message: '',
         },
-        authError: {
+        roomError: {
           status: true,
           message: action.payload.message,
         },
@@ -81,11 +54,11 @@ export default (state = INITIAL_STATE, action) => {
     case actions.CLEAR_ERROR_STATUS:
       return {
         ...state,
-        authSuccess: {
+        roomSuccess: {
           status: false,
           message: '',
         },
-        authError: {
+        roomError: {
           status: false,
           message: '',
         },

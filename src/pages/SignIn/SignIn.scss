@@ -7,6 +7,10 @@
   background-color: whitesmoke;
   border-radius: 8%;
 
+  @media(max-width: 756px){
+    width: 70%;
+  }
+
    &__inputs{
     position: relative;
     left: 50%;
